@@ -1,0 +1,25 @@
+{
+  "name": "webcms",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/hyper63/webcms.git",
+  "author": "Tom Wilson <twilson63@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@hyper.io/connect": "^1.0.3",
+    "crocks": "^0.12.4",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.1",
+    "ramda": "^0.27.1"
+  },
+  "devDependencies": {
+    "@twilson63/test-server": "^1.0.2",
+    "fetch-mock": "^9.11.0",
+    "nodemon": "^2.0.7",
+    "tape": "^5.2.2"
+  },
+  "scripts": {
+    "dev": "nodemon server.js",
+    "test": "tape test/*_test.js"
+  }
+}
