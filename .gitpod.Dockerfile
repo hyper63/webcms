@@ -13,6 +13,6 @@ USER gitpod
 RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
   https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-RUN cp .vimrc ~/.vimrc
+RUN cp /workspace/webcms/.vimrc /home/gitpod/.vimrc
 RUN vim +'PlugInstall --sync' +qa
 
