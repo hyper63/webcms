@@ -3,6 +3,7 @@ const z = require('zod')
 const { Right, Left } = Either
 
 const schema = z.object({
+  id: z.string().optional(),
   question: z.string().max(200),
   answer: z.string().max(1000),
   tags: z.array(z.string()).min(1)
@@ -37,7 +38,7 @@ module.exports = (services) => {
         .map(verify).chain(eitherToAsync)
     ,
     update: (id, faq) => null,
-    get: (id) => null,
+    get: (id) => services.get(id).map(schema.parse),
     'delete': (id) => null
   })
 }

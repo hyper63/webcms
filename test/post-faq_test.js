@@ -39,6 +39,7 @@ test('Create FAQ', async t => {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
+      id: "faq-1",
       question: 'What is an Either',
       answer: 'RTFM',
       tags: ['common']

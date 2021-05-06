@@ -8,7 +8,8 @@ const toJSON = res => Async.fromPromise(res.json.bind(res))()
 module.exports =  
 ({
   query,
-  create
+  create,
+  get
 })
 
 // Query -> Async
@@ -35,4 +36,12 @@ function create(doc) {
   }).chain(toJSON)
 }
 
-
+function get(id) {
+    return asyncFetch(hyper.url('data', id ), {
+        method: 'GET',
+         headers: { 
+            Authorization: `Bearer ${hyper.token()}`,
+            Accept: 'application/json'
+    }
+    }).chain(toJSON)
+}
