@@ -1,6 +1,7 @@
 const hyper = require('@hyper.io/connect')
-const fetch = require('node-fetch')
 const { Async } = require('crocks')
+
+if (!globalThis.fetch) { throw new Error('fetch is not defined') }
 
 const asyncFetch = Async.fromPromise(fetch)
 const toJSON = res => Async.fromPromise(res.json.bind(res))() 

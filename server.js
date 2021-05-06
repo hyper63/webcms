@@ -1,3 +1,9 @@
+const fetch = require('node-fetch')
+
+if (!globalThis.fetch) {
+  globalThis.fetch = fetch
+}
+
 const express = require('express')
 const faqGetIndex = require('./api/faqs/get-index.js')
 const faqPostIndex = require('./api/faqs/post-index.js')

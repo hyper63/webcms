@@ -15,11 +15,11 @@ const validate = (faq) => {
 }
 
 const verify = (result) => result.ok ? Right(result) : Left(new Error('could not create'))
-const addDefaults = faq => ({...faq, type: 'faq', created: new Date().toISOString()})
+const addDefaults = faq => ({ ...faq, type: 'faq', created: new Date().toISOString() })
 
 module.exports = (services) => {
   return ({
-    list: () => 
+    list: () =>
       services.query({
         selector: {
           type: 'faq'
@@ -27,8 +27,8 @@ module.exports = (services) => {
         limit: 1000
       })
     ,
-    create: (faq) => 
-    Async.of(faq)
+    create: (faq) =>
+      Async.of(faq)
         // validate
         .map(validate).chain(eitherToAsync)
         //process
