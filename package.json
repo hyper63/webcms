@@ -10,7 +10,8 @@
     "crocks": "^0.12.4",
     "express": "^4.17.1",
     "node-fetch": "^2.6.1",
-    "ramda": "^0.27.1"
+    "ramda": "^0.27.1",
+    "zod": "^3.0.0-beta.1"
   },
   "devDependencies": {
     "@twilson63/test-server": "^1.0.2",

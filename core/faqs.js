@@ -1,7 +1,22 @@
-const { Async } = require('crocks')
+const { Async, eitherToAsync, Either } = require('crocks')
+const z = require('zod')
+const { Right, Left } = Either
+
+const schema = z.object({
+  question: z.string().max(200),
+  answer: z.string().max(1000),
+  tags: z.array(z.string()).min(1)
+})
+
+const validate = (faq) => {
+  const { success, data, error } = schema.safeParse(faq)
+  return success ? Right(data) : Left(error)
+}
+
+const verify = (result) => result.ok ? Right(result) : Left(new Error('could not create'))
+const addDefaults = faq => ({...faq, type: 'faq', created: new Date().toISOString()})
 
 module.exports = (services) => {
-  console.log({services})
   return ({
     list: () => 
       services.query({
@@ -12,8 +27,14 @@ module.exports = (services) => {
       })
     ,
     create: (faq) => 
-      Async.of({...faq, type: 'faq'})
+    Async.of(faq)
+        // validate
+        .map(validate).chain(eitherToAsync)
+        //process
+        .map(addDefaults)
         .chain(services.create)
+        // verify
+        .map(verify).chain(eitherToAsync)
     ,
     update: (id, faq) => null,
     get: (id) => null,
