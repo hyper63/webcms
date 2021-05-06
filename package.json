@@ -14,12 +14,13 @@
   },
   "devDependencies": {
     "@twilson63/test-server": "^1.0.2",
+    "dotenv": "^9.0.0",
     "fetch-mock": "^9.11.0",
     "nodemon": "^2.0.7",
     "tape": "^5.2.2"
   },
   "scripts": {
-    "dev": "nodemon server.js",
+    "dev": "nodemon -r dotenv/config server.js",
     "test": "tape test/*_test.js"
   }
 }

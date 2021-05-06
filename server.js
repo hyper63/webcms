@@ -1,12 +1,18 @@
 const express = require('express')
 const faqGetIndex = require('./api/faqs/get-index.js')
+const faqPostIndex = require('./api/faqs/post-index.js')
+
 const core = require('./middleware/core')
+
 
 const app = express()
 
 app.use(core)
+app.use(express.json())
 
 app.get('/api/faqs', faqGetIndex)
+app.post('/api/faqs', faqPostIndex)
+
 
 
 app.get('/', (req, res) => {

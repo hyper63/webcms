@@ -10,3 +10,9 @@ USER gitpod
 #     sudo rm -rf /var/lib/apt/lists/*
 #
 # More information: https://www.gitpod.io/docs/config-docker/
+RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+RUN cp .vimrc ~/.vimrc
+RUN vim +'PlugInstall --sync' +qa
+

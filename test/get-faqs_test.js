@@ -9,6 +9,8 @@ test('GET /api/faqs', async t => {
   const server = testServer(app)
   const result = await fetch(server.url + '/api/faqs')
     .then(r => r.json())
+
+  console.log(result)
   t.ok(result.ok)
 
   server.close()
