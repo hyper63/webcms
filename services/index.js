@@ -11,7 +11,8 @@ module.exports =
   query,
   create,
   get,
-  update
+  update,
+  'delete': remove 
 })
 
 // Query -> Async
@@ -58,3 +59,13 @@ function update(id, doc) {
     body: JSON.stringify(doc)
   }).chain(toJSON)
 }
+
+function remove(id) {
+  return asyncFetch(hyper.url('data', id), {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${hyper.token()}`
+    }
+  }).chain(toJSON)
+}
+

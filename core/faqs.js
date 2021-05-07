@@ -51,6 +51,6 @@ module.exports = (services) => {
          .map(verify).chain(eitherToAsync)
     ,
     get: (id) => services.get(id).map(schema.parse),
-    'delete': (id) => null
+    'delete': (id) => services.delete(id).map(verify).chain(eitherToAsync) 
   })
 }
