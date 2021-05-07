@@ -6,7 +6,9 @@ const schema = z.object({
   id: z.string().optional(),
   question: z.string().max(200),
   answer: z.string().max(1000),
-  tags: z.array(z.string()).min(1)
+  tags: z.array(z.string()).min(1),
+  created: z.string().optional(),
+  updated: z.string().optional()
 })
 
 const validate = (faq) => {
@@ -15,7 +17,11 @@ const validate = (faq) => {
 }
 
 const verify = (result) => result.ok ? Right(result) : Left(new Error('could not create'))
-const addDefaults = faq => ({ ...faq, type: 'faq', created: new Date().toISOString() })
+const addDefaults = faq => ({ ...faq, 
+  type: 'faq', 
+  created: faq.created || new Date().toISOString(),
+  updated: new Date().toISOString()
+})
 
 module.exports = (services) => {
   return ({
@@ -37,7 +43,13 @@ module.exports = (services) => {
         // verify
         .map(verify).chain(eitherToAsync)
     ,
-    update: (id, faq) => null,
+    update: (id, faq) => 
+      Async.of(faq)
+         .map(validate).chain(eitherToAsync)
+         .map(addDefaults)
+         .chain(faq => services.update(id, faq))
+         .map(verify).chain(eitherToAsync)
+    ,
     get: (id) => services.get(id).map(schema.parse),
     'delete': (id) => null
   })
