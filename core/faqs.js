@@ -16,9 +16,11 @@ const validate = (faq) => {
   return success ? Right(data) : Left(error)
 }
 
-const verify = (result) => result.ok ? Right(result) : Left(new Error('could not create'))
-const addDefaults = faq => ({ ...faq, 
-  type: 'faq', 
+const verify = (result) => result.ok ? Right(result) : Left({ status: result.status, message: result.message })
+
+const addDefaults = faq => ({
+  ...faq,
+  type: 'faq',
   created: faq.created || new Date().toISOString(),
   updated: new Date().toISOString()
 })
@@ -43,14 +45,14 @@ module.exports = (services) => {
         // verify
         .map(verify).chain(eitherToAsync)
     ,
-    update: (id, faq) => 
+    update: (id, faq) =>
       Async.of(faq)
-         .map(validate).chain(eitherToAsync)
-         .map(addDefaults)
-         .chain(faq => services.update(id, faq))
-         .map(verify).chain(eitherToAsync)
+        .map(validate).chain(eitherToAsync)
+        .map(addDefaults)
+        .chain(faq => services.update(id, faq))
+        .map(verify).chain(eitherToAsync)
     ,
     get: (id) => services.get(id).map(schema.parse),
-    'delete': (id) => services.delete(id).map(verify).chain(eitherToAsync) 
+    'delete': (id) => services.delete(id).map(verify).chain(eitherToAsync)
   })
 }
