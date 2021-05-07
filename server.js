@@ -12,32 +12,30 @@ const faqPutByID = require('./api/faqs/[id]/put-index')
 const faqDeleteByID = require('./api/faqs/[id]/delete-index')
 
 const core = require('./middleware/core')
-
-
+const jwt = require('./middleware/jwt')
 const app = express()
 
+app.use(jwt)
 app.use(core)
 app.use(express.json())
 
-app.use(function (err, req, res, next) {
-  console.log(err.stack)
-  res.status(500).json({ ok: false, message: err.message})
-})
-
-
 app.get('/api/faqs', faqGetIndex)
 app.post('/api/faqs', faqPostIndex)
-app.get('/api/faqs/:id', faqGetByID )
+app.get('/api/faqs/:id', faqGetByID)
 app.put('/api/faqs/:id', faqPutByID)
 app.delete('/api/faqs/:id', faqDeleteByID)
 
 app.get('/', (req, res) => {
-  res.json({ name: 'hyper web cms'})
+  res.json({ name: 'hyper web cms' })
 })
 
-
 app.all('*', (req, res) => {
-  res.status(404).json({ok: false, message: 'not implemented'})
+  res.status(404).json({ ok: false, message: 'not implemented' })
+})
+
+app.use(function (err, req, res, next) {
+  console.log(err.stack)
+  res.status(err.status || 500).json({ ok: false, message: err.message })
 })
 
 if (!module.parent) {
