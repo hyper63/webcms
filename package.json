@@ -12,6 +12,7 @@
     "express-jwt": "^6.0.0",
     "node-fetch": "^2.6.1",
     "ramda": "^0.27.1",
+    "swagger-ui-express": "^4.1.6",
     "zod": "^3.0.0-beta.1"
   },
   "devDependencies": {
@@ -19,10 +20,11 @@
     "dotenv": "^9.0.0",
     "fetch-mock": "^9.11.0",
     "nodemon": "^2.0.7",
+    "swagger-cli": "^4.0.4",
     "tape": "^5.2.2"
   },
   "scripts": {
-    "dev": "nodemon -r dotenv/config server.js",
-    "test": "tape test/*_test.js"
+    "dev": "swagger-cli bundle -o openapi.json -t json openapi.yml && nodemon -r dotenv/config server.js",
+    "test": "swagger-cli validate openapi.yml && tape test/*_test.js"
   }
 }

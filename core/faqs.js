@@ -1,6 +1,7 @@
 const { Async, eitherToAsync, Either } = require('crocks')
 const z = require('zod')
 const { Right, Left } = Either
+const { map } = require('ramda')
 
 const schema = z.object({
   id: z.string().optional(),
@@ -11,9 +12,22 @@ const schema = z.object({
   updated: z.string().optional()
 })
 
+/**
+ * {\"code\":\"invalid_type\",\"expected\":\"string\",\"received\":\"undefined\",\"path\":[\"question\"],\"message\":\"Required\"}
+ * */
+
 const validate = (faq) => {
   const { success, data, error } = schema.safeParse(faq)
-  return success ? Right(data) : Left(error)
+  return success ? Right(data) : Left({
+    status: 400,
+    message: JSON.stringify(
+      map(
+        error => `${error.code}: expected '${error.expected}' and received '${error.received}' for the property '${error.path.join('.')}' - message: ${error.message}`
+      ,
+        error.issues
+      )
+    )
+  })
 }
 
 const verify = (result) => result.ok ? Right(result) : Left({ status: result.status, message: result.message })
