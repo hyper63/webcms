@@ -1,19 +1,2 @@
 image:
   file: .gitpod.Dockerfile
-
-# List the ports you want to expose and what to do when they are served. See https://www.gitpod.io/docs/config-ports/
-ports:
-  - port: 3000
-    onOpen: open-preview
-
-# List the start up tasks. You can start them in parallel in multiple terminals. See https://www.gitpod.io/docs/config-start-tasks/
-tasks:
-  - init: curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    command: |
-    echo "setting up vim"
-    (
-      cp .vimrc /home/gitpod/.vimrc &&
-      vim +'PlugInstall --sync' +qa
-    )
-  - init: yarn
-    command: yarn dev
