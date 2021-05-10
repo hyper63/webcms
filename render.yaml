@@ -1,0 +1,15 @@
+services:
+  - name: webcms-api
+    type: web
+    env: node
+    branch: master
+    buildCommand: yarn
+    startCommand: yarn start
+    envVars:
+      - key: HYPER
+        sync: false
+      - key: API_SECRET
+        generateValue: true
+    domains:
+      - webcms-api.hyper.io
+      - webcms-api.hyper63.com
