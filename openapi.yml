@@ -1,0 +1,159 @@
+openapi: 3.0.3
+info:
+  title: hyper/webcms
+  description: >
+    ![logo](https://hyper63.com/favicon-96x96.png)
+
+    # Welcome to hyper/webCMS
+    
+    An content management system for the hyper website
+  contact:
+    url: https://hyper.io/contact
+    email: info@hyper.io
+    name: hyper
+  license:
+    name: Apache Licnense 2.0
+  version: "1.0"
+servers:
+  - description: Development Server
+    url: http://localhost:3000
+  - description: Production Server
+    url: https://webcms.hyper.io
+paths:
+  /:
+    get: 
+      tags: [health]
+      description: Healthcheck endpoint
+      responses:
+        "200": 
+          description: successful health response
+          content:
+            application/json:
+              schema:
+                properties:
+                  name:
+                    description: webcms
+                    type: string
+  /api/faqs:
+    post:
+      description: Create FAQ Document
+      tags: [faq]
+      requestBody:
+        description: faq document
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                id:
+                  type: string
+                question:
+                  type: string
+                answer: 
+                  type: string
+                tags:
+                  type: array
+                  items:
+                    type: string
+      security:
+        - bearerAuth: []
+      responses:
+        "201":
+          description: successfully created faq document
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    type: boolean
+                  id:
+                    type: string
+        "400":
+          description: bad request failure due to invalid faq document
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    type: boolean
+                  message:
+                    type: string
+        "401":
+          description: not authorized
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok: 
+                    type: boolean
+                  message:
+                    type: string
+        "409":
+          description: document conflict
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok: 
+                    type: boolean
+                  message:
+                    type: string
+        "500":
+          description: server error
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    type: boolean
+                  message:
+                    type: string
+    get:
+      description: list faqs
+      tags: [faq]
+      responses:
+        "200":
+          description: successful list of faqs
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok:
+                    type: boolean
+                  faqs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        question:
+                          type: string
+                        answer:
+                          type: string
+                        tags:
+                          type: array
+                          items:
+                            type: string
+                        created:
+                          type: string
+                        updated:
+                          type: string
+        "500":
+          description: server error
+          content:
+            application/json:
+              schema:
+                properties:
+                  ok: 
+                    type: boolean
+                  message:
+                    type: string
+                    
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

@@ -4,7 +4,16 @@ const { Async } = require('crocks')
 if (!globalThis.fetch) { throw new Error('fetch is not defined') }
 
 const asyncFetch = Async.fromPromise(fetch)
-const toJSON = res => Async.fromPromise(res.json.bind(res))() 
+const toJSON = res => {
+  if (res.ok) {
+    return Async.fromPromise(res.json.bind(res))() 
+  } else {
+    console.log(res)
+    // TODO: add better error messages for specific
+    // failures like 409 Document already exists
+    return Async.Rejected({ ok: false, status: res.status})
+  }
+}
 
 module.exports =  
 ({
