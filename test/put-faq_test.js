@@ -1,12 +1,11 @@
 const test = require('tape')
-const fetchMock = require('fetch-mock')
 const testServer = require('@twilson63/test-server')
-
-globalThis.fetch = fetchMock.sandbox()
-  .put('https://dev.hyper63.com/data/twilson63/faq-1', { ok: true })
 
 const app = require('../server')
 const fetch = require('node-fetch')
+const jwt = require('jsonwebtoken')
+
+const token = jwt.sign({sub: 'test'}, process.env.API_SECRET, {audience: 'https://webcms.hyper.io'})
 
 test('PUT /api/faqs/:id', async t => {
   t.plan(1)
@@ -14,7 +13,8 @@ test('PUT /api/faqs/:id', async t => {
   const result = await (await fetch(server.url + '/api/faqs/faq-1', {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
     },
     body: JSON.stringify({
       id: 'faq-1',
