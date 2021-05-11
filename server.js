@@ -22,10 +22,10 @@ const app = express()
 
 app.use(jwt)
 app.use(core)
-//app.use(cors)
+app.use(cors)
 app.use(express.json())
 
-app.use('/api-docs', cors(), swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 app.get('/api/faqs', faqGetIndex)
 app.post('/api/faqs', faqPostIndex)
