@@ -1,9 +1,6 @@
 const fetch = require('node-fetch')
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./openapi.json');
-
-
-
 if (!globalThis.fetch) {
   globalThis.fetch = fetch
 }
@@ -24,11 +21,7 @@ app.use(jwt)
 app.use(core)
 
 app.use(express.json())
-const log = logThis => console.log('log!: ', logThis)
-const SKIP_CORS = process.env.SKIP_CORS
-const skipCORS = SKIP_CORS === 'true'
-
-skipCORS ? log(['SKIP_CORS', process.env.SKIP_CORS]) : app.use(cors)
+app.use(cors())
 
 // https://webcms-api.hyper.io/
 
@@ -52,7 +45,7 @@ app.all('*', (req, res) => {
 app.use(function (err, req, res, next) {
   console.log(err.stack)
   if (err.name === 'UnauthorizedError') {
-    return res.status(401).json({ok: false, message: 'not authorized'})
+    return res.status(401).json({ ok: false, message: 'not authorized' })
   }
   res.status(err.status || 500).json({ ok: false, message: err.message })
 })
