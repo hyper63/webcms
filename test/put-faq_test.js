@@ -5,7 +5,7 @@ const app = require('../server')
 const fetch = require('node-fetch')
 const jwt = require('jsonwebtoken')
 
-const token = jwt.sign({sub: 'test'}, process.env.API_SECRET, {audience: 'https://webcms.hyper.io'})
+const token = jwt.sign({sub: 'test'}, process.env.API_SECRET, {audience: 'https://webcms-api.hyper.io'})
 
 test('PUT /api/faqs/:id', async t => {
   t.plan(1)

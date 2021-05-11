@@ -5,7 +5,7 @@ const testServer = require('@twilson63/test-server')
 const app = require('../server')
 const jwt = require('jsonwebtoken')
 
-const token = jwt.sign({sub: 'test'}, process.env.API_SECRET, {audience: 'https://webcms.hyper.io'})
+const token = jwt.sign({sub: 'test'}, process.env.API_SECRET, {audience: 'https://webcms-api.hyper.io'})
 
 test('DELETE /api/faqs/:id', async t => {
   t.plan(1)
