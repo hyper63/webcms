@@ -14,6 +14,7 @@ test('GET /api/faqs', async t => {
     .then(r => r.json())
 
   t.ok(result.ok)
+  console.log(JSON.stringify(result))
 
   server.close()
 

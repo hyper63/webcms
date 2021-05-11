@@ -6,18 +6,20 @@ globalThis.fetch = fetchMock.sandbox()
       "id": "faq-1",
       "question": "What is hyper?",
       "answer": "awesome",
-      "tags": ["common"]
+      "tags": ["common"],
+      active: false
     }
   ]}})
   .put('https://dev.hyper63.com/data/twilson63/faq-1', { ok: true })
   .delete('https://dev.hyper63.com/data/twilson63/faq-1', {ok: true, mock: true })
   .get('https://dev.hyper63.com/data/twilson63/faq-1', {
   id: 'faq-1',
-  question: 'What is an Either',
-  answer: 'RTFM',
+  question: 'What is an Either?',
+  answer: 'Its a functional thang.',
   tags: [ 'common' ],
   type: 'faq',
-  created: '2021-05-06T18:31:39.499Z'
+  created: '2021-05-06T18:31:39.499Z',
+  active: false
 })
 
 

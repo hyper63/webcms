@@ -9,7 +9,8 @@ const schema = z.object({
   answer: z.string().max(1000),
   tags: z.array(z.string()).min(1),
   created: z.string().optional(),
-  updated: z.string().optional()
+  updated: z.string().optional(),
+  active: z.boolean().optional()
 })
 
 /**
@@ -18,6 +19,8 @@ const schema = z.object({
 
 const validate = (faq) => {
   const { success, data, error } = schema.safeParse(faq)
+
+  console.log({validateSuccess: success})
   return success ? Right(data) : Left({
     status: 400,
     message: JSON.stringify(
@@ -36,7 +39,8 @@ const addDefaults = faq => ({
   ...faq,
   type: 'faq',
   created: faq.created || new Date().toISOString(),
-  updated: new Date().toISOString()
+  updated: new Date().toISOString(),
+  active: faq.active || false
 })
 
 module.exports = (services) => {
