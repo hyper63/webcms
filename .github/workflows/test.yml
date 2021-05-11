@@ -13,7 +13,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: yarn
-      - run: yarn test2
+      - run: yarn test
         env:
           CI: true
           HYPER: ${{ secrets.HYPER }}
