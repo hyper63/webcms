@@ -28,9 +28,7 @@ test('Create FAQ no tags', async t => {
   t.equal(result.message, JSON.stringify([
     "too_small: expected \'undefined\' and received \'undefined\' for the property \'tags\' - message: Should have at least 1 items" 
   ]))
-
   server.close()
-
 })
 
 test('Create FAQ', async t => {

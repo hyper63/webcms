@@ -5,7 +5,7 @@ const fetch = require('node-fetch')
 
 
 test('GET /api/faqs/:id', async t => {
-  t.plan(1)
+  t.plan(2)
   const server = testServer(app)
   const result = await fetch(server.url + '/api/faqs/faq-1')
     .then(r => r.json())
@@ -23,7 +23,8 @@ test('GET /api/faqs/:id', async t => {
 }
   */
   t.equal(result.id, 'faq-1')
-
+  t.false(result.active)
+  console.log('result.active: ',result.active )
   server.close()
 
 })

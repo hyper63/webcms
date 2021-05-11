@@ -3,7 +3,7 @@ module.exports = async function createFaq(req, res) {
   // Async -> Promise then execute
   try {
     const result = await faqs.create(req.body).toPromise()
-    res.json(result)
+    return res.json(result)
   } catch (err) {
     if (err.status) {
       res.status(err.status).json({ ok: false, message: err.message})
