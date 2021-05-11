@@ -17,13 +17,15 @@ const faqDeleteByID = require('./api/faqs/[id]/delete-index')
 
 const core = require('./middleware/core')
 const jwt = require('./middleware/jwt')
+const cors = require('cors')
 const app = express()
 
 app.use(jwt)
 app.use(core)
+//app.use(cors)
 app.use(express.json())
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+app.use('/api-docs', cors(), swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 app.get('/api/faqs', faqGetIndex)
 app.post('/api/faqs', faqPostIndex)
