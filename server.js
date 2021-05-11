@@ -17,11 +17,21 @@ const faqDeleteByID = require('./api/faqs/[id]/delete-index')
 
 const core = require('./middleware/core')
 const jwt = require('./middleware/jwt')
+const cors = require('cors')
 const app = express()
 
 app.use(jwt)
 app.use(core)
+
 app.use(express.json())
+const log = logThis => console.log('log!: ', logThis)
+const SKIP_CORS = process.env.SKIP_CORS
+const skipCORS = SKIP_CORS === 'true'
+
+skipCORS ? log(['SKIP_CORS', process.env.SKIP_CORS]) : app.use(cors)
+
+// https://webcms-api.hyper.io/
+
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 

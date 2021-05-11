@@ -19,7 +19,7 @@ servers:
   - description: Development Server
     url: http://localhost:3000
   - description: Production Server
-    url: https://webcms.hyper.io
+    url: https://webcms-api.hyper.io/
 paths:
   /:
     get: 
