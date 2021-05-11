@@ -26,8 +26,7 @@
   },
   
   "scripts": {
-    "dev": "swagger-cli bundle -o openapi.json -t json openapi.yml && nodemon -r dotenv/config server.js",
-    "test": "swagger-cli validate openapi.yml && tape test/index.js",
-    "test2": "swagger-cli validate openapi.yml && SKIP_CORS=true tape test/index.js"
+    "dev": "swagger-cli bundle -o openapi.json -t json openapi.yml &git& nodemon -r dotenv/config server.js",
+    "test": "swagger-cli validate openapi.yml && tape test/index.js"
   }  
 }
